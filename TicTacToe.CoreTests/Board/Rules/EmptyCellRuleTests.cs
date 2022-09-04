@@ -15,9 +15,11 @@ namespace TicTacToe.Core.Board.Rules.Tests
             var mockGrid = new MockGrid()
                 .MockIsCell(expectedResult);
 
+            var mockPlayer = new MockPlayer();
+
             var mockPlay = new MockPlay()
-                .MockIndex(It.IsAny<int>())
-                .MockPlayer(It.IsAny<IPlayer>());
+                .MockIndex(0)
+                .MockPlayer(mockPlayer.Object);
 
             var sut = new EmptyCellRule(mockGrid.Object);
 

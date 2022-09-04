@@ -1,26 +1,36 @@
-﻿using Autofac;
+using Autofac;
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using TicTacToe.Core;
 using TicTacToe.Core.Board;
 using TicTacToe.Core.Board.Rules;
 using TicTacToe.Core.GameOver.Draw;
 using TicTacToe.Core.GameOver.Victory;
 using TicTacToe.Core.Validator;
-using TicTacToe.Terminal.Presenter;
-using TicTacToe.Terminal.Views;
+using TicTacToe.WinForms.Presenter;
+using TicTacToe.WinForms.Views;
 
-namespace TicTacToe.Terminal
+namespace TicTacToe.WinForms
 {
-    class Program
+    internal static class Program
     {
         private static IContainer Container { get; set; }
-        static void Main(string[] args)
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            Container = SetupContainer();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
+            Container = SetupContainer();
             using var scope = Container.BeginLifetimeScope();
-            var worker = scope.Resolve<Worker>();
-            worker.Run();
+            var gamePresenter = scope.Resolve<IGamePresenter>();
+
+            Application.Run(gamePresenter.View as GameWindow);
         }
 
         static IContainer SetupContainer()
@@ -47,23 +57,16 @@ namespace TicTacToe.Terminal
                 .As<IGame>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<GameView>()
-                .As<IGameView>()
+            builder.RegisterType<GameWindow>()
+                .As<IGameWindow>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<Grid>()
                 .As<IGrid>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<GridView>()
-                .As<IGridView>()
-                .InstancePerLifetimeScope();
-
             builder.RegisterType<GamePresenter>()
                 .As<IGamePresenter>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<Worker>()
                 .InstancePerLifetimeScope();
 
             return builder.Build();

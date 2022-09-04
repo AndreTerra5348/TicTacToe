@@ -21,10 +21,10 @@ namespace TicTacToe.Core
             IEnumerable<IGridRule> gridRules)
         {
             _grid = grid;
-            Player = Player.P1;
             _victoryConditions = victoryConditions;
             _drawConditions = drawConditions;
             _gridRules = gridRules;
+            Player = Player.P1;
         }
 
         public void Reset()

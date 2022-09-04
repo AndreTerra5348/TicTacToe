@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace TicTacToe.Core.Board
 {
-    public interface IGrid : INotifyPropertyChanged
+    public interface IGrid
     {
         IEnumerable<Cell> GetCells();
         Cell GetCell(int index);

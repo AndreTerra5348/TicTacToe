@@ -25,7 +25,7 @@ namespace TicTacToe.Terminal.Presenter
         private void View_Restarted(object sender, EventArgs e)
         {
             _game.Reset();
-            _view.Start();
+            _view.Reset();
         }
 
         private void View_Exited(object sender, EventArgs e)
@@ -33,9 +33,9 @@ namespace TicTacToe.Terminal.Presenter
             _isPlaying = false;
         }
 
-        private void View_Played(object sender, IInput input)
+        private void View_Played(object sender, int index)
         {
-            IPlay play = new Play(input.Index, _game.Player);
+            var play = new Play(index, _game.Player);
 
             if (!_game.IsPlayValid(play))
             {
@@ -44,6 +44,7 @@ namespace TicTacToe.Terminal.Presenter
             }
 
             _game.Play(play);
+            _view.SetCell(play.Index, play.Player.Cell);
 
             if (_game.Won())
             {
@@ -64,7 +65,7 @@ namespace TicTacToe.Terminal.Presenter
 
         public void Run()
         {
-            _view.Start();
+            _view.Reset();
             while (_isPlaying)
             {
                 _view.TurnBegin();

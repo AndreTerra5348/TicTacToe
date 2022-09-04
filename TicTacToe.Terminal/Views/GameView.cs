@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using TicTacToe.Core.Board;
 using TicTacToe.Core.GameOver;
+using TicTacToe.Core.Validator;
 
 namespace TicTacToe.Terminal.Views
 {
     class GameView : IGameView
     {
         private readonly IGridView _gridView;
+        private readonly IIndexValidator _indexValidator;
 
         public static readonly int ExitValue = -1;
 
@@ -17,18 +20,20 @@ namespace TicTacToe.Terminal.Views
             { Outcome.Draw, "Draw!" },
         };
 
-        public EventHandler<IInput> Played { get; set; }
+        public EventHandler<int> Played { get; set; }
         public EventHandler Exited { get; set; }
         public EventHandler Restarted { get; set; }
 
-        public GameView(IGridView gridView)
+
+        public GameView(IGridView gridView, IIndexValidator indexValidator)
         {
             _gridView = gridView;
+            _indexValidator = indexValidator;
         }
 
-        public void Start()
+        public void Reset()
         {
-            _gridView.Draw();
+            _gridView.Reset();
         }
 
         public void TurnBegin()
@@ -45,12 +50,22 @@ namespace TicTacToe.Terminal.Views
         {
             int index = ExitValue;
             var line = Console.ReadLine();
-            while (!int.TryParse(line, out index))
+            while (!int.TryParse(line, out index) || !_indexValidator.IsValid(index))
             {
                 Console.WriteLine("Invalid input.");
                 line = Console.ReadLine();
             }
             return index;
+        }
+
+        bool IsIndexValid(int index)
+        {
+            return index >= 0 && index < Grid.Size;
+        }
+
+        public void SetCell(int index, Cell cell)
+        {
+            _gridView.SetCell(index, cell);
         }
 
         public void InvalidPlay()
@@ -75,7 +90,7 @@ namespace TicTacToe.Terminal.Views
         {
             var handler = Played;
             if (handler != null)
-                handler.Invoke(this, new Input(index));
+                handler.Invoke(this, index);
         }
 
         private void OnExited()
@@ -91,6 +106,7 @@ namespace TicTacToe.Terminal.Views
             if (handler != null)
                 handler.Invoke(this, EventArgs.Empty);
         }
+
         
     }
 }

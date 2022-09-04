@@ -1,7 +1,10 @@
-﻿namespace TicTacToe.Terminal.Views
+﻿using TicTacToe.Core.Board;
+
+namespace TicTacToe.Terminal.Views
 {
     interface IGridView
     {
-        void Draw();
+        void SetCell(int index, Cell cell);
+        void Reset();
     }
 }

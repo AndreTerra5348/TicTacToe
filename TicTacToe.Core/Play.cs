@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TicTacToe.Core
+﻿namespace TicTacToe.Core
 {
     public class Play : IPlay
     {

@@ -14,30 +14,40 @@ namespace TicTacToe.Terminal.Views
             { Cell.P2, 'X' }
         };
         private readonly int NewLineMod = 3;
-        private readonly IGrid _grid;
+        private readonly char[] _cells;
 
-        public GridView(IGrid grid)
+        public GridView()
         {
-            _grid = grid;
-            _grid.PropertyChanged += _grid_PropertyChanged;
+            _cells = new char[]
+            {
+                _characters[Cell.Empty], _characters[Cell.Empty], _characters[Cell.Empty],
+                _characters[Cell.Empty], _characters[Cell.Empty], _characters[Cell.Empty],
+                _characters[Cell.Empty], _characters[Cell.Empty], _characters[Cell.Empty]
+            };
         }
 
-        private void _grid_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        public void SetCell(int index, Cell cell)
         {
-            if (e.PropertyName != nameof(_grid.SetCell))
-                return;
-
-            Draw();
+            _cells[index] = _characters[cell];
+            Show();
         }
 
-        public void Draw()
+        public void Reset()
+        {
+            for(int i = 0; i < _cells.Length; i++)
+            {
+                _cells[i] = _characters[Cell.Empty];
+            }
+
+            Show();
+        }
+
+        private void Show()
         {
             Console.Clear();
-            for (int i = 1; i < Grid.Size+1; i++)
+            for (int i = 1; i < _cells.Length + 1; i++)
             {
-                var cell = _grid.GetCell(i - 1);
-                char character = _characters[cell];
-                Console.Write(character);
+                Console.Write(_cells[i - 1]);
                 if (i % NewLineMod == 0)
                     Console.Write('\n');
             }
