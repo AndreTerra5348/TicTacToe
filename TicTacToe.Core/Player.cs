@@ -5,8 +5,8 @@ namespace TicTacToe.Core
 {
     public sealed class Player : IPlayer
     {
-        public static readonly Player P1 = new Player(Cell.P1);
-        public static readonly Player P2 = new Player(Cell.P2);
+        public static readonly IPlayer P1 = new Player(Cell.P1);
+        public static readonly IPlayer P2 = new Player(Cell.P2);
         public Cell Cell { get; }
 
         private Player(Cell cell)

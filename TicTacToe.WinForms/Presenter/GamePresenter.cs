@@ -9,7 +9,8 @@ namespace TicTacToe.WinForms.Presenter
     class GamePresenter : IGamePresenter
     {
         private readonly IGame _game;
-        public IGameWindow View { get; }
+        public IGameWindow View { get; private set; }
+
 
         public GamePresenter(IGame game, IGameWindow view)
         {
@@ -29,20 +30,19 @@ namespace TicTacToe.WinForms.Presenter
 
         private void View_CellClick(object sender, int index)
         {
-            var play = new Play(index, _game.Player);
+            var play = new Play(index, _game.CurrentPlayer);
             if (!_game.IsPlayValid(play))
             {
                 View.InvalidPlay();
                 return;
             }
 
-            Console.WriteLine("Click " + index);
             _game.Play(play);
             View.SetCell(play.Index, play.Player.Cell);
 
             if (_game.Won())
             {
-                View.SessionEnded(_game.Player.Cell == Cell.P1 ? Outcome.P1Victory : Outcome.P2Victory);
+                View.SessionEnded(_game.CurrentPlayer.Cell == Cell.P1 ? Outcome.P1Victory : Outcome.P2Victory);
                 _game.SwitchPlayer();
             }
 

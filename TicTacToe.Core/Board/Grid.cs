@@ -7,37 +7,37 @@ namespace TicTacToe.Core.Board
     public class Grid : IGrid
     {
         public static readonly int Size = 9;
-        private Cell[] Cells { get; set; }
+        private readonly Cell[] _cells;
 
         public Grid()
         {
-            Cells = Enumerable.Repeat(Cell.Empty, Size).ToArray();            
+            _cells = Enumerable.Repeat(Cell.Empty, Size).ToArray();            
         }
 
         public void Reset()
         {
             for (int i = 0; i < Size; i++)
-                Cells[i] = Cell.Empty;
+                _cells[i] = Cell.Empty;
         }
 
         public Cell GetCell(int index)
         {
-            return Cells[index];
+            return _cells[index];
         }
 
         public void SetCell(int index, Cell cell)
         {
-            Cells[index] = cell;
+            _cells[index] = cell;
         }        
 
         public IEnumerable<Cell> GetCells()
         {
-            return Cells;
+            return _cells;
         }
 
         public bool IsCell(int index, Cell cell)
         {
-            return Cells[index] == cell;
+            return _cells[index] == cell;
         }
     }
 }

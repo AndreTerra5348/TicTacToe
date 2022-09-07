@@ -35,7 +35,7 @@ namespace TicTacToe.Terminal.Presenter
 
         private void View_Played(object sender, int index)
         {
-            var play = new Play(index, _game.Player);
+            var play = new Play(index, _game.CurrentPlayer);
 
             if (!_game.IsPlayValid(play))
             {
@@ -48,7 +48,7 @@ namespace TicTacToe.Terminal.Presenter
 
             if (_game.Won())
             {
-                _view.SessionEnded(_game.Player.Cell == Cell.P1 ? Outcome.P1Victory : Outcome.P2Victory);
+                _view.SessionEnded(_game.CurrentPlayer.Cell == Cell.P1 ? Outcome.P1Victory : Outcome.P2Victory);
                 _game.SwitchPlayer();
                 return;
             }

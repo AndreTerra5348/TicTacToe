@@ -48,7 +48,7 @@ namespace TicTacToe.Core.Tests
             sut.SwitchPlayer();
 
             // Assert
-            sut.Player.Should().Be(Player.P2);
+            sut.CurrentPlayer.Should().Be(Player.P2);
         }
 
         [Fact]

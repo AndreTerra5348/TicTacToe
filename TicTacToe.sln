@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.Terminal", "TicTa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.CoreTests", "TicTacToe.CoreTests\TicTacToe.CoreTests.csproj", "{C42DABA0-28E6-45DA-93DA-C044D610AE97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.WinForms", "TicTacToe.WinForms\TicTacToe.WinForms.csproj", "{84C04E66-4E88-4A58-9077-387694DFA900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.WinForms", "TicTacToe.WinForms\TicTacToe.WinForms.csproj", "{84C04E66-4E88-4A58-9077-387694DFA900}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.MAUI", "TicTacToe.MAUI\TicTacToe.MAUI.csproj", "{604455F5-FE3B-4FE7-8D8E-090813F3D766}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{84C04E66-4E88-4A58-9077-387694DFA900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84C04E66-4E88-4A58-9077-387694DFA900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84C04E66-4E88-4A58-9077-387694DFA900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604455F5-FE3B-4FE7-8D8E-090813F3D766}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

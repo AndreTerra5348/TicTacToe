@@ -9,7 +9,10 @@ namespace TicTacToe.Core
     public class Game : IGame
     {
         private readonly IGrid _grid;
-        public Player Player { get; private set; }
+        public static readonly IPlayer StartPlayer = Player.P1;
+
+        public IPlayer CurrentPlayer { get; private set; }
+
 
         private readonly IEnumerable<IVictoryCondition> _victoryConditions;
         private readonly IEnumerable<IDrawCondition> _drawConditions;
@@ -24,7 +27,7 @@ namespace TicTacToe.Core
             _victoryConditions = victoryConditions;
             _drawConditions = drawConditions;
             _gridRules = gridRules;
-            Player = Player.P1;
+            CurrentPlayer = StartPlayer;
         }
 
         public void Reset()
@@ -34,7 +37,7 @@ namespace TicTacToe.Core
 
         public void SwitchPlayer()
         {
-            Player = Player.Cell == Cell.P1 ? Player.P2 : Player.P1;
+            CurrentPlayer = CurrentPlayer.Cell == Player.P1.Cell ? Player.P2 : Player.P1;
         }
 
         public void Play(IPlay play)
@@ -56,7 +59,7 @@ namespace TicTacToe.Core
         {
             foreach (var condition in _victoryConditions)
             {
-                if (condition.Won(_grid, Player))
+                if (condition.Won(_grid, CurrentPlayer))
                     return true;
             }
             return false;

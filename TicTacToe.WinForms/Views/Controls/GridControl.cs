@@ -32,8 +32,9 @@ namespace TicTacToe.WinForms.Views.Controls
                 button8,
                 button9
             };
-            
-            for(int i = 0; i < _buttons.Length; i++)
+
+
+            for (int i = 0; i < _buttons.Length; i++)
             {
                 _buttons[i].Tag = i;
                 _buttons[i].Click += Cell_Click;

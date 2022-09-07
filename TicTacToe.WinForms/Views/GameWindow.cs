@@ -9,12 +9,17 @@ namespace TicTacToe.WinForms.Views
 {
     public partial class GameWindow : Form, IGameWindow
     {
-        public event EventHandler<int> CellClick
-        {
-            add { gridControl.ButtonClick += value; }
-            remove { gridControl.ButtonClick -= value; }
-        }
+        public event EventHandler<int> CellClick;
         public event EventHandler ResetClick;
+
+        private readonly Button[] _buttons;
+
+        private readonly Dictionary<Cell, string> _characters = new Dictionary<Cell, string>()
+        {
+            { Cell.Empty, String.Empty },
+            { Cell.P1, "O" },
+            { Cell.P2, "X" }
+        };
 
         private readonly Dictionary<Outcome, string> _outcomeMessage = new Dictionary<Outcome, string>()
         {
@@ -26,6 +31,33 @@ namespace TicTacToe.WinForms.Views
         public GameWindow()
         {
             InitializeComponent();
+            _buttons = new Button[]
+            {
+                button1,
+                button2,
+                button3,
+                button4,
+                button5,
+                button6,
+                button7,
+                button8,
+                button9,
+            };
+
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                _buttons[i].Tag = i;
+                _buttons[i].Click += Button_Click;
+            }
+        }
+
+        private void Button_Click(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            var handler = CellClick;
+            if (handler != null)
+                handler.Invoke(this, Convert.ToInt32(button.Tag));
+            button.Enabled = false;
         }
 
         private void Reset_Click(object sender, EventArgs e)
@@ -44,7 +76,7 @@ namespace TicTacToe.WinForms.Views
 
         public void SetCell(int index, Cell cell)
         {
-            gridControl.SetCell(index, cell);
+            _buttons[index].Text = _characters[cell];
         }
 
         public void InvalidPlay()
@@ -54,12 +86,21 @@ namespace TicTacToe.WinForms.Views
 
         public void SessionEnded(Outcome outcome)
         {
-            MessageBox.Show(_outcomeMessage[outcome]);
+            foreach (var button in _buttons)
+            {
+                button.Enabled = false;
+            }
+
+            MessageBox.Show(_outcomeMessage[outcome]);            
         }
 
         public void Reset()
         {
-            gridControl.Reset();
+            foreach (var button in _buttons)
+            {
+                button.Enabled = true;
+                button.Text = String.Empty;
+            }
         }
     }
 }
